@@ -1,0 +1,27 @@
+{
+    "name": "KonstantinKolodnitsky/kk_xls",
+    "type": "library",
+    "description": "XLS generator for ATK4",
+    "homepage": "https://github.com/KonstantinKolodnitsky/kk_xls",
+    "keywords": ["atk4"],
+    "license": "AGPL",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "Konstantin Kolodnitsky",
+            "email": "kolodnitsky@gmail.com"
+        }
+    ],
+    "source": {
+        "url": "git@github.com:KonstantinKolodnitsky/kk_xls.git",
+        "type": "git",
+        "reference": "origin/master"
+    },
+    "require": {
+        "atk4/atk4": ">=4.2.5",
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-0": {"kk_xls": "lib"}
+    }
+}
