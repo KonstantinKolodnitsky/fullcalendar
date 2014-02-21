@@ -6,7 +6,7 @@
  */
 namespace KonstantinKolodnitsky\fullcalendar;
 class View_Fullcalendar extends \View{
-    public $m;
+    public $model;
     function init(){
         parent::init();
 
@@ -14,14 +14,44 @@ class View_Fullcalendar extends \View{
         $addon_location = $this->api->locate('addons',__NAMESPACE__);
         $this->api->pathfinder->addLocation($addon_location,array(
             'php'=>array('lib','vendor'),
-            'js'=>array('fullcalendar'),
-            'css'=>array('vendor'),
-        ))->setParent($l);
+//            'css'=>array('public'),
+        ))->setParent($l)->setBaseURL($this->api->pm->base_path);
 
         $this->loadPlugin();
+        $this->getCalendar();
     }
     function loadPlugin(){
         $this->js(true)->_load('fullcalendar/fullcalendar.min');
-        $this->js(true)->_css('fullcalendar/fullcalendar');
+//        $this->js(true)->_css('fullcalendar');
+    }
+    private function getCalendar() {
+        $count = 0;
+        $j_str = '[';
+        if(!$this->model){
+            throw $this->exception('You have not specified model');
+        }
+        foreach ($this->model as $element) {
+//            var_dump($v); echo '<hr>';
+            if ($count>0)$j_str.=',';
+            $count++;
+            $t_start_arr = explode ("-", $element['DATE_LISTED']);
+            $t_start = $t_start_arr[1]."/".$t_start_arr[2]."/".$t_start_arr[0];
+            $t_end_arr = explode ("-", $element['DATE_REQUIRED']);
+            $t_end = $t_end_arr[1]."/".$t_end_arr[2]."/".$t_end_arr[0];
+            if(!$element['DATE_REQUIRED']){
+                $t_end = $t_start;
+            }
+            $j_str = $j_str.'
+                {
+                    title: "N'.$element['id'].'",'.'
+                    start: "'.$t_start.'",'.'
+                    end: "'.$t_end.'",'.'
+                    color: "#'.dechex(rand(0x000000,0xffffff)).'",
+                    allDay: true,
+                   '.(($element['id'])?' url: "'.$this->api->url('jobs/info').'\x26job_id='.$element['id'].'",':'').'
+                }';
+        }
+        $j_str .= ']';
+        $this->js(true)->_fn('fullCalendar',array('events'=>$j_str));
     }
 }
