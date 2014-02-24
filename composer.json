@@ -1,8 +1,8 @@
 {
-    "name": "KonstantinKolodnitsky/kk_xls",
+    "name": "KonstantinKolodnitsky/fullcalendar",
     "type": "library",
-    "description": "XLS generator for ATK4",
-    "homepage": "https://github.com/KonstantinKolodnitsky/kk_xls",
+    "description": "Fullcalendar addon for ATK4.3",
+    "homepage": "https://github.com/KonstantinKolodnitsky/fullcalendar",
     "keywords": ["atk4"],
     "license": "AGPL",
     "version": "1.0",
@@ -13,15 +13,15 @@
         }
     ],
     "source": {
-        "url": "git@github.com:KonstantinKolodnitsky/kk_xls.git",
+        "url": "git@github.com:KonstantinKolodnitsky/fullcalendar.git",
         "type": "git",
         "reference": "origin/master"
     },
     "require": {
-        "atk4/atk4": ">=4.2.5",
+        "atk4/atk4": ">=4.3",
         "php": ">=5.3"
     },
     "autoload": {
-        "psr-0": {"kk_xls": "lib"}
+        "psr-0": {"fullcalendar": "lib"}
     }
 }
