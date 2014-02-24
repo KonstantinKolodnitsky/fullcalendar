@@ -7,22 +7,25 @@
 namespace KonstantinKolodnitsky\fullcalendar;
 class View_Fullcalendar extends \View{
     public $model;
+    public $calendar;
     function init(){
         parent::init();
 
         $l = $this->api->locate('addons',__NAMESPACE__,'location');
         $addon_location = $this->api->locate('addons',__NAMESPACE__);
+
         $this->api->pathfinder->addLocation($addon_location,array(
-            'php'=>array('lib','vendor'),
-//            'css'=>array('public'),
-        ))->setParent($l)->setBaseURL($this->api->pm->base_path);
+//            'php'=>array('lib'),
+            'css'=>array('public'),
+        ))->setParent($l);//->setBaseURL($this->api->pm->base_path);
 
         $this->loadPlugin();
         $this->getCalendar();
     }
     function loadPlugin(){
-        $this->js(true)->_load('fullcalendar/fullcalendar.min');
-//        $this->js(true)->_css('fullcalendar');
+        $this->calendar = $this->js(true)->_load('fullcalendar/fullcalendar.min');
+        $this->js(true)->_css('fullcalendar');
+//        $this->api->jui->addStaticStylesheet('fullcalendar');
     }
     private function getCalendar() {
         $count = 0;
@@ -52,6 +55,11 @@ class View_Fullcalendar extends \View{
                 }';
         }
         $j_str .= ']';
-        $this->js(true)->_fn('fullCalendar',array('events'=>$j_str));
+        $this->calendar->fullCalendar(array(
+            'events'=>$j_str,
+            'd' => date('d'),
+            'm' => date('m'),
+            'y' => date('Y')
+        ));
     }
 }
